@@ -11,9 +11,7 @@ const PORT = process.env.PORT || 3000;
 
 // CORS configuration for production
 const corsOptions = {
-  origin: process.env.NODE_ENV === 'production'
-    ? process.env.FRONTEND_URL || true
-    : 'http://localhost:3000',
+  origin: true,
   credentials: true
 };
 
@@ -27,7 +25,7 @@ app.use(session({
     secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
+    sameSite: 'lax'
   }
 }));
 app.use(express.static(path.join(__dirname, '../public')));
