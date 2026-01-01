@@ -1,0 +1,23 @@
+{
+  "name": "crypto-trade-notes",
+  "version": "1.0.0",
+  "description": "Cryptocurrency trade notes application",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node server/index.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": ["crypto", "trading", "journal"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "bcrypt": "^5.1.1",
+    "express-session": "^1.17.3",
+    "pg": "^8.11.3"
+  }
+}

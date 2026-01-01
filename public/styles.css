@@ -1,0 +1,1384 @@
+:root[data-theme="dark"] {
+  --bg-primary: #0f0f23;
+  --bg-secondary: #1a1a2e;
+  --bg-tertiary: #16162a;
+  --bg-input: #0f0f23;
+  --border-color: #2a2a40;
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --text-tertiary: #a0a0a0;
+  --text-muted: #888;
+  --text-placeholder: #555;
+  --accent-primary: #8b5cf6;
+  --accent-hover: #7c3aed;
+  --accent-light: #a78bfa;
+  --success: #10b981;
+  --success-bg: #064e3b;
+  --success-text: #6ee7b7;
+  --success-border: #065f46;
+  --error: #ef4444;
+  --error-bg: #7f1d1d;
+  --error-text: #fca5a5;
+  --error-border: #991b1b;
+  --warning: #f59e0b;
+  --long-bg: #064e3b;
+  --long-text: #6ee7b7;
+  --short-bg: #7f1d1d;
+  --short-text: #fca5a5;
+  --calendar-highlight: #1e1b4b;
+}
+
+:root[data-theme="light"] {
+  --bg-primary: #f5f5f5;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #fafafa;
+  --bg-input: #ffffff;
+  --border-color: #e0e0e0;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-tertiary: #6a6a6a;
+  --text-muted: #888;
+  --text-placeholder: #aaa;
+  --accent-primary: #8b5cf6;
+  --accent-hover: #7c3aed;
+  --accent-light: #a78bfa;
+  --success: #10b981;
+  --success-bg: #d1fae5;
+  --success-text: #065f46;
+  --success-border: #6ee7b7;
+  --error: #ef4444;
+  --error-bg: #fee2e2;
+  --error-text: #991b1b;
+  --error-border: #fca5a5;
+  --warning: #f59e0b;
+  --long-bg: #d1fae5;
+  --long-text: #065f46;
+  --short-bg: #fee2e2;
+  --short-text: #991b1b;
+  --calendar-highlight: #ede9fe;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, sans-serif;
+  background: var(--bg-primary);
+  min-height: 100vh;
+  padding: 18px;
+  color: var(--text-primary);
+  font-size: 14.4px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.container {
+  max-width: 1260px;
+  margin: 0 auto;
+}
+
+header {
+  text-align: center;
+  color: white;
+  margin-bottom: 27px;
+}
+
+header h1 {
+  font-size: 2.25rem;
+  margin-bottom: 9px;
+  color: var(--accent-primary);
+}
+
+header p {
+  font-size: 0.99rem;
+  opacity: 0.9;
+  color: var(--text-tertiary);
+}
+
+/* Two Column Layout */
+.two-column-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22.5px;
+  margin-bottom: 22.5px;
+}
+
+.add-trade-section,
+.trades-section,
+.calendar-section {
+  background: var(--bg-secondary);
+  border-radius: 10.8px;
+  padding: 22.5px;
+  box-shadow: 0 3.6px 5.4px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-color);
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.trades-section {
+  margin-bottom: 22.5px;
+}
+
+h2 {
+  color: var(--accent-primary);
+  margin-bottom: 18px;
+  font-size: 1.35rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 13.5px;
+  margin-bottom: 13.5px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 4.5px;
+  color: var(--text-secondary);
+  font-size: 0.81rem;
+}
+
+.form-group small {
+  color: var(--text-muted);
+  font-size: 0.765rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 9px;
+  border: 2px solid var(--border-color);
+  border-radius: 5.4px;
+  font-size: 0.9rem;
+  transition: border-color 0.3s;
+  background: var(--bg-input);
+  color: var(--text-primary);
+}
+
+/* Remove number input spinners */
+.form-group input[type="number"]::-webkit-outer-spin-button,
+.form-group input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.form-group input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: var(--text-placeholder);
+}
+
+.form-group textarea {
+  resize: vertical;
+  font-family: inherit;
+}
+
+.form-actions {
+  display: flex;
+  gap: 9px;
+  margin-top: 18px;
+}
+
+.btn {
+  padding: 10.8px 21.6px;
+  border: none;
+  border-radius: 5.4px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-primary {
+  background: var(--accent-primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1.8px);
+  box-shadow: 0 3.6px 7.2px rgba(139, 92, 246, 0.4);
+}
+
+.btn-secondary {
+  background: #374151;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #4b5563;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 36px;
+  color: #666;
+}
+
+.trades-list {
+  display: grid;
+  gap: 13.5px;
+}
+
+.trade-card {
+  border: 2px solid var(--border-color);
+  border-radius: 7.2px;
+  padding: 18px;
+  transition: all 0.3s;
+  background: var(--bg-tertiary);
+}
+
+.trade-card:hover {
+  box-shadow: 0 3.6px 10.8px rgba(139, 92, 246, 0.2);
+  transform: translateY(-1.8px);
+  border-color: var(--accent-primary);
+}
+
+.trade-card.trade-win {
+  border-left: 3.6px solid var(--success);
+}
+
+.trade-card.trade-loss {
+  border-left: 3.6px solid var(--error);
+}
+
+.trade-card.trade-open {
+  border-left: 3.6px solid var(--warning);
+}
+
+.trade-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 13.5px;
+  padding-bottom: 13.5px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.trade-pair {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.trade-pair strong {
+  font-size: 1.08rem;
+  color: var(--text-primary);
+}
+
+.trade-type {
+  padding: 3.6px 10.8px;
+  border-radius: 3.6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.trade-type.long {
+  background: var(--long-bg);
+  color: var(--long-text);
+}
+
+.trade-type.short {
+  background: var(--short-bg);
+  color: var(--short-text);
+}
+
+.trade-profit {
+  font-size: 1.17rem;
+  font-weight: 700;
+}
+
+.profit-positive {
+  color: var(--success);
+}
+
+.profit-negative {
+  color: var(--error);
+}
+
+.trade-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+  gap: 9px;
+  margin-bottom: 13.5px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8px;
+}
+
+.detail-item .label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.detail-item span:last-child {
+  color: var(--text-primary);
+}
+
+.trade-notes {
+  background: var(--bg-input);
+  padding: 10.8px;
+  border-radius: 5.4px;
+  margin-bottom: 9px;
+  border: 1px solid var(--border-color);
+}
+
+.trade-notes strong {
+  display: block;
+  margin-bottom: 4.5px;
+  color: var(--accent-primary);
+  font-size: 0.81rem;
+}
+
+.trade-notes p {
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.trade-actions {
+  display: flex;
+  gap: 7.2px;
+  margin-top: 13.5px;
+}
+
+.btn-small {
+  padding: 5.4px 12.6px;
+  border: none;
+  border-radius: 3.6px;
+  font-size: 0.765rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 600;
+}
+
+.btn-edit {
+  background: #3b82f6;
+  color: white;
+}
+
+.btn-edit:hover {
+  background: #2563eb;
+}
+
+.btn-delete {
+  background: #ef4444;
+  color: white;
+}
+
+.btn-delete:hover {
+  background: #dc2626;
+}
+
+/* Calendar Styles */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  gap: 13.5px;
+}
+
+.calendar-controls {
+  display: flex;
+  align-items: center;
+  gap: 13.5px;
+}
+
+.calendar-month {
+  font-size: 0.99rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  min-width: 162px;
+  text-align: center;
+}
+
+.calendar {
+  width: 100%;
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4.5px;
+  margin-bottom: 9px;
+}
+
+.weekday {
+  text-align: center;
+  font-weight: 600;
+  color: var(--accent-primary);
+  padding: 9px;
+  font-size: 0.81rem;
+}
+
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4.5px;
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  border-radius: 7.2px;
+  padding: 7.2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  background: var(--bg-tertiary);
+}
+
+.calendar-day:hover {
+  border-color: var(--accent-primary);
+  transform: translateY(-1.8px);
+  box-shadow: 0 1.8px 7.2px rgba(139, 92, 246, 0.3);
+}
+
+.calendar-day.other-month {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.calendar-day.other-month:hover {
+  border-color: var(--border-color);
+  transform: none;
+  box-shadow: none;
+}
+
+.calendar-day.has-trades {
+  background: var(--calendar-highlight);
+  border-color: var(--accent-primary);
+  font-weight: 600;
+}
+
+.calendar-day.selected {
+  background: var(--accent-primary);
+  color: white;
+  border-color: var(--accent-primary);
+}
+
+.calendar-day.selected .day-number {
+  color: white;
+}
+
+.calendar-day.selected .trade-count {
+  background: white;
+  color: var(--accent-primary);
+}
+
+.day-number {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+}
+
+.trade-count {
+  font-size: 0.63rem;
+  background: var(--accent-primary);
+  color: white;
+  border-radius: 9px;
+  padding: 1.8px 5.4px;
+  margin-top: 3.6px;
+  font-weight: 600;
+}
+
+.trades-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.trades-header h2 {
+  margin: 0;
+}
+
+/* Username Link */
+.username-link {
+  color: var(--accent-primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.username-link:hover {
+  color: var(--accent-light);
+  text-decoration: underline;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 18px;
+}
+
+.modal-content {
+  background: var(--bg-secondary);
+  border-radius: 10.8px;
+  padding: 27px;
+  max-width: 450px;
+  width: 100%;
+  box-shadow: 0 9px 27px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--border-color);
+}
+
+.modal-content h2 {
+  margin-bottom: 22.5px;
+  text-align: center;
+}
+
+.success-message {
+  background: var(--success-bg);
+  color: var(--success-text);
+  padding: 9px;
+  border-radius: 5.4px;
+  margin-bottom: 13.5px;
+  font-size: 0.81rem;
+  text-align: center;
+  border: 1px solid var(--success-border);
+}
+
+/* Authentication Styles */
+.auth-container {
+  max-width: 405px;
+  margin: 0 auto;
+  padding: 18px;
+}
+
+.auth-header {
+  text-align: center;
+  color: white;
+  margin-bottom: 27px;
+}
+
+.auth-header h1 {
+  font-size: 2.25rem;
+  margin-bottom: 9px;
+  color: var(--accent-primary);
+}
+
+.auth-header p {
+  font-size: 0.99rem;
+  opacity: 0.9;
+  color: var(--text-tertiary);
+}
+
+.auth-card {
+  background: var(--bg-secondary);
+  border-radius: 10.8px;
+  padding: 27px;
+  box-shadow: 0 3.6px 5.4px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-color);
+}
+
+.auth-card h2 {
+  text-align: center;
+  margin-bottom: 22.5px;
+}
+
+.auth-card .form-group {
+  margin-bottom: 13.5px;
+}
+
+.auth-card .form-group small {
+  font-size: 0.765rem;
+  color: var(--text-muted);
+  margin-top: 4.5px;
+}
+
+.auth-switch {
+  text-align: center;
+  margin-top: 18px;
+  color: var(--text-muted);
+}
+
+.auth-switch a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.auth-switch a:hover {
+  text-decoration: underline;
+  color: var(--accent-light);
+}
+
+.error-message {
+  background: var(--error-bg);
+  color: var(--error-text);
+  padding: 9px;
+  border-radius: 5.4px;
+  margin-bottom: 13.5px;
+  font-size: 0.81rem;
+  text-align: center;
+  border: 1px solid var(--error-border);
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* Header with user info */
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 13.5px;
+  color: white;
+}
+
+.user-info span {
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+
+/* Theme and Language Toggle Buttons */
+.settings-controls {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.toggle-btn {
+  padding: 5.4px 12.6px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-radius: 3.6px;
+  font-size: 0.765rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4.5px;
+}
+
+.toggle-btn:hover {
+  background: var(--accent-primary);
+  color: white;
+  border-color: var(--accent-primary);
+}
+
+@media (max-width: 1200px) {
+  .two-column-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 1.8rem;
+  }
+
+  .header-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .trade-details {
+    grid-template-columns: 1fr;
+  }
+
+  .trade-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 9px;
+  }
+
+  .auth-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .auth-card {
+    padding: 18px;
+  }
+
+  .calendar-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .calendar-controls {
+    justify-content: center;
+  }
+
+  .calendar-day {
+    padding: 3.6px;
+  }
+
+  .day-number {
+    font-size: 0.81rem;
+  }
+
+  .trade-count {
+    font-size: 0.54rem;
+    padding: 0.9px 3.6px;
+  }
+
+  .weekday {
+    font-size: 0.675rem;
+    padding: 4.5px;
+  }
+
+  .two-column-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-content {
+    padding: 18px;
+  }
+}
+
+
+.add-trade-section,
+.trades-section,
+.calendar-section {
+  background: #1a1a2e;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  border: 1px solid #2a2a40;
+}
+
+.trades-section {
+  margin-bottom: 25px;
+}
+
+h2 {
+  color: #8b5cf6;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #b0b0b0;
+  font-size: 0.9rem;
+}
+
+.form-group small {
+  color: #888;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 10px;
+  border: 2px solid #2a2a40;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+  background: #0f0f23;
+  color: #e0e0e0;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: var(--text-placeholder);
+}
+
+.form-group textarea {
+  resize: vertical;
+  font-family: inherit;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-primary {
+  background: #8b5cf6;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #7c3aed;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(139, 92, 246, 0.4);
+}
+
+.btn-secondary {
+  background: #374151;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #4b5563;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.trades-list {
+  display: grid;
+  gap: 15px;
+}
+
+.trade-card {
+  border: 2px solid #2a2a40;
+  border-radius: 8px;
+  padding: 20px;
+  transition: all 0.3s;
+  background: #16162a;
+}
+
+.trade-card:hover {
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
+  transform: translateY(-2px);
+  border-color: #8b5cf6;
+}
+
+.trade-card.trade-win {
+  border-left: 4px solid #10b981;
+}
+
+.trade-card.trade-loss {
+  border-left: 4px solid #ef4444;
+}
+
+.trade-card.trade-open {
+  border-left: 4px solid #f59e0b;
+}
+
+.trade-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #2a2a40;
+}
+
+.trade-pair {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.trade-pair strong {
+  font-size: 1.2rem;
+  color: #e0e0e0;
+}
+
+.trade-type {
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.trade-type.long {
+  background: #064e3b;
+  color: #6ee7b7;
+}
+
+.trade-type.short {
+  background: #7f1d1d;
+  color: #fca5a5;
+}
+
+.trade-profit {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.profit-positive {
+  color: #10b981;
+}
+
+.profit-negative {
+  color: #ef4444;
+}
+
+.trade-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.detail-item .label {
+  font-size: 0.8rem;
+  color: #888;
+  font-weight: 600;
+}
+
+.detail-item span:last-child {
+  color: #e0e0e0;
+}
+
+.trade-notes {
+  background: #0f0f23;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  border: 1px solid #2a2a40;
+}
+
+.trade-notes strong {
+  display: block;
+  margin-bottom: 5px;
+  color: #8b5cf6;
+  font-size: 0.9rem;
+}
+
+.trade-notes p {
+  color: #b0b0b0;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.trade-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.btn-small {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 600;
+}
+
+.btn-edit {
+  background: #3b82f6;
+  color: white;
+}
+
+.btn-edit:hover {
+  background: #2563eb;
+}
+
+.btn-delete {
+  background: #ef4444;
+  color: white;
+}
+
+.btn-delete:hover {
+  background: #dc2626;
+}
+
+/* Calendar Styles */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.calendar-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.calendar-month {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #e0e0e0;
+  min-width: 180px;
+  text-align: center;
+}
+
+.calendar {
+  width: 100%;
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.weekday {
+  text-align: center;
+  font-weight: 600;
+  color: #8b5cf6;
+  padding: 10px;
+  font-size: 0.9rem;
+}
+
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  border: 2px solid #2a2a40;
+  border-radius: 8px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  background: #16162a;
+}
+
+.calendar-day:hover {
+  border-color: #8b5cf6;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+}
+
+.calendar-day.other-month {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.calendar-day.other-month:hover {
+  border-color: #2a2a40;
+  transform: none;
+  box-shadow: none;
+}
+
+.calendar-day.has-trades {
+  background: #1e1b4b;
+  border-color: #8b5cf6;
+  font-weight: 600;
+}
+
+.calendar-day.selected {
+  background: #8b5cf6;
+  color: white;
+  border-color: #8b5cf6;
+}
+
+.calendar-day.selected .day-number {
+  color: white;
+}
+
+.calendar-day.selected .trade-count {
+  background: white;
+  color: #8b5cf6;
+}
+
+.day-number {
+  font-size: 1rem;
+  color: #e0e0e0;
+}
+
+.trade-count {
+  font-size: 0.7rem;
+  background: #8b5cf6;
+  color: white;
+  border-radius: 10px;
+  padding: 2px 6px;
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+.trades-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.trades-header h2 {
+  margin: 0;
+}
+
+/* Authentication Styles */
+.auth-container {
+  max-width: 450px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.auth-header {
+  text-align: center;
+  color: white;
+  margin-bottom: 30px;
+}
+
+.auth-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: #8b5cf6;
+}
+
+.auth-header p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  color: #a0a0a0;
+}
+
+.auth-card {
+  background: #1a1a2e;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  border: 1px solid #2a2a40;
+}
+
+.auth-card h2 {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.auth-card .form-group {
+  margin-bottom: 15px;
+}
+
+.auth-card .form-group small {
+  font-size: 0.85rem;
+  color: #888;
+  margin-top: 5px;
+}
+
+.auth-switch {
+  text-align: center;
+  margin-top: 20px;
+  color: #888;
+}
+
+.auth-switch a {
+  color: #8b5cf6;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.auth-switch a:hover {
+  text-decoration: underline;
+  color: #a78bfa;
+}
+
+.error-message {
+  background: #7f1d1d;
+  color: #fca5a5;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+  text-align: center;
+  border: 1px solid #991b1b;
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* Header with user info */
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: white;
+}
+
+.user-info span {
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+
+/* Theme and Language Toggle Buttons */
+.settings-controls {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.toggle-btn {
+  padding: 5.4px 12.6px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-radius: 3.6px;
+  font-size: 0.765rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4.5px;
+}
+
+.toggle-btn:hover {
+  background: var(--accent-primary);
+  color: white;
+  border-color: var(--accent-primary);
+}
+
+@media (max-width: 1200px) {
+  .two-column-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 2rem;
+  }
+
+  .header-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .trade-details {
+    grid-template-columns: 1fr;
+  }
+
+  .trade-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .auth-header h1 {
+    font-size: 2rem;
+  }
+
+  .auth-card {
+    padding: 20px;
+  }
+
+  .calendar-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .calendar-controls {
+    justify-content: center;
+  }
+
+  .calendar-day {
+    padding: 4px;
+  }
+
+  .day-number {
+    font-size: 0.9rem;
+  }
+
+  .trade-count {
+    font-size: 0.6rem;
+    padding: 1px 4px;
+  }
+
+  .weekday {
+    font-size: 0.75rem;
+    padding: 5px;
+  }
+
+  .two-column-layout {
+    grid-template-columns: 1fr;
+  }
+}

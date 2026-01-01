@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crypto Trade Notes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Authentication Views -->
+    <div v-if="!isAuthenticated" class="auth-container">
+      <header class="auth-header">
+        <div class="settings-controls" style="position: absolute; top: 18px; right: 18px;">
+          <button @click="toggleTheme" class="toggle-btn" :title="theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+            {{ theme === 'dark' ? '☀️' : '🌙' }}
+          </button>
+          <button @click="toggleLanguage" class="toggle-btn">
+            {{ language === 'en' ? '中文' : 'EN' }}
+          </button>
+        </div>
+        <h1>📊 {{ t.appTitle }}</h1>
+        <p>{{ t.appSubtitle }}</p>
+      </header>
+
+      <!-- Login Form -->
+      <div v-if="authView === 'login'" class="auth-card">
+        <h2>{{ t.login }}</h2>
+        <form @submit.prevent="login">
+          <div class="form-group">
+            <label>{{ t.username }}</label>
+            <input type="text" v-model="loginForm.username" required autofocus>
+          </div>
+          <div class="form-group">
+            <label>{{ t.password }}</label>
+            <input type="password" v-model="loginForm.password" required>
+          </div>
+          <div v-if="authError" class="error-message">{{ authError }}</div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary full-width">{{ t.login }}</button>
+          </div>
+        </form>
+        <p class="auth-switch">
+          {{ t.noAccount }} <a href="#" @click.prevent="authView = 'register'">{{ t.register }}</a>
+        </p>
+      </div>
+
+      <!-- Register Form -->
+      <div v-if="authView === 'register'" class="auth-card">
+        <h2>{{ t.createAccount }}</h2>
+        <form @submit.prevent="register">
+          <div class="form-group">
+            <label>{{ t.username }}</label>
+            <input type="text" v-model="registerForm.username" required autofocus>
+          </div>
+          <div class="form-group">
+            <label>{{ t.email }}</label>
+            <input type="email" v-model="registerForm.email" required>
+          </div>
+          <div class="form-group">
+            <label>{{ t.password }}</label>
+            <input type="password" v-model="registerForm.password" required minlength="6">
+            <small>{{ t.passwordMin }}</small>
+          </div>
+          <div v-if="authError" class="error-message">{{ authError }}</div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary full-width">{{ t.register }}</button>
+          </div>
+        </form>
+        <p class="auth-switch">
+          {{ t.haveAccount }} <a href="#" @click.prevent="authView = 'login'">{{ t.login }}</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Main Application -->
+    <div v-else class="container">
+      <header>
+        <div class="header-content">
+          <div>
+            <h1>📊 {{ t.appTitle }}</h1>
+            <p>{{ t.appSubtitle }}</p>
+          </div>
+          <div class="user-info">
+            <div class="settings-controls">
+              <button @click="toggleTheme" class="toggle-btn" :title="theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+                {{ theme === 'dark' ? '☀️' : '🌙' }}
+              </button>
+              <button @click="toggleLanguage" class="toggle-btn">
+                {{ language === 'en' ? '中文' : 'EN' }}
+              </button>
+            </div>
+            <span>{{ t.welcome }}, <a href="#" @click.prevent="showPasswordModal" class="username-link">{{ currentUser.username }}</a></span>
+            <button @click="logout" class="btn btn-secondary btn-small">{{ t.logout }}</button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Password Change Modal -->
+      <div v-if="showPasswordChange" class="modal-overlay" @click="closePasswordModal">
+        <div class="modal-content" @click.stop>
+          <h2>{{ t.changePassword }}</h2>
+          <form @submit.prevent="changePassword">
+            <div class="form-group">
+              <label>{{ t.currentPassword }}</label>
+              <input type="password" v-model="passwordForm.currentPassword" required>
+            </div>
+            <div class="form-group">
+              <label>{{ t.newPassword }}</label>
+              <input type="password" v-model="passwordForm.newPassword" required minlength="6">
+              <small>{{ t.passwordMin }}</small>
+            </div>
+            <div class="form-group">
+              <label>{{ t.confirmPassword }}</label>
+              <input type="password" v-model="passwordForm.confirmPassword" required minlength="6">
+            </div>
+            <div v-if="passwordError" class="error-message">{{ passwordError }}</div>
+            <div v-if="passwordSuccess" class="success-message">{{ passwordSuccess }}</div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">{{ t.changePassword }}</button>
+              <button type="button" class="btn btn-secondary" @click="closePasswordModal">{{ t.cancel }}</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Two Column Layout -->
+      <div class="two-column-layout">
+        <!-- Left Column: Add Trade -->
+        <div class="add-trade-section">
+          <h2>{{ editingTrade ? t.editTrade : t.addNewTrade }}</h2>
+          <form @submit.prevent="saveTrade">
+            <div class="form-row">
+              <div class="form-group">
+                <label>{{ t.dateTime }}</label>
+                <input type="datetime-local" v-model="currentTrade.datetime" required>
+              </div>
+              <div class="form-group">
+                <label>{{ t.tradingPair }}</label>
+                <input type="text" v-model="currentTrade.pair" placeholder="BTC/USDT" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>{{ t.tradeType }}</label>
+                <select v-model="currentTrade.type" required>
+                  <option value="long">{{ t.long }}</option>
+                  <option value="short">{{ t.short }}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>{{ t.exchange }}</label>
+                <input type="text" v-model="currentTrade.exchange" :placeholder="language === 'en' ? 'Binance, Coinbase, etc.' : '币安, Coinbase 等'">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>{{ t.entryPrice }}</label>
+                <input type="number" step="0.00000001" v-model="currentTrade.entryPrice" placeholder="0.00" required>
+              </div>
+              <div class="form-group">
+                <label>{{ t.exitPrice }}</label>
+                <input type="number" step="0.00000001" v-model="currentTrade.exitPrice" placeholder="0.00">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>{{ t.amount }}</label>
+                <input type="number" step="0.00000001" v-model="currentTrade.amount" :placeholder="language === 'en' ? 'Amount traded' : '交易数量'" required>
+              </div>
+              <div class="form-group">
+                <label>{{ t.profitLoss }}</label>
+                <input type="number" step="0.01" v-model="currentTrade.profitLoss" placeholder="0.00">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>{{ t.tradeRationale }}</label>
+              <textarea v-model="currentTrade.rationale" rows="3" :placeholder="t.rationalePlaceholder"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>{{ t.notesOutcome }}</label>
+              <textarea v-model="currentTrade.notes" rows="3" :placeholder="t.notesPlaceholder"></textarea>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">
+                {{ editingTrade ? t.updateTrade : t.saveTrade }}
+              </button>
+              <button type="button" class="btn btn-secondary" @click="cancelEdit" v-if="editingTrade">
+                {{ t.cancel }}</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Right Column: Calendar View -->
+        <div class="calendar-section">
+          <div class="calendar-header">
+            <h2>{{ t.calendarView }}</h2>
+            <div class="calendar-controls">
+              <button class="btn-small" @click="previousMonth">&lt;</button>
+              <span class="calendar-month">{{ currentMonthYear }}</span>
+              <button class="btn-small" @click="nextMonth">&gt;</button>
+            </div>
+          </div>
+
+          <div class="calendar">
+            <div class="calendar-weekdays">
+              <div class="weekday">{{ t.sun }}</div>
+              <div class="weekday">{{ t.mon }}</div>
+              <div class="weekday">{{ t.tue }}</div>
+              <div class="weekday">{{ t.wed }}</div>
+              <div class="weekday">{{ t.thu }}</div>
+              <div class="weekday">{{ t.fri }}</div>
+              <div class="weekday">{{ t.sat }}</div>
+            </div>
+            <div class="calendar-days">
+              <div
+                v-for="day in calendarDays"
+                :key="day.date"
+                class="calendar-day"
+                :class="{
+                  'other-month': day.otherMonth,
+                  'has-trades': day.tradeCount > 0,
+                  'selected': isSelectedDay(day.date)
+                }"
+                @click="selectDay(day)">
+                <span class="day-number">{{ day.dayNumber }}</span>
+                <span v-if="day.tradeCount > 0" class="trade-count">{{ day.tradeCount }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="trades-section">
+        <div class="trades-header">
+          <h2>{{ selectedDateTitle }}</h2>
+          <button v-if="selectedDate" class="btn-small btn-secondary" @click="clearDateFilter">{{ t.showAll }}</button>
+        </div>
+
+        <div v-if="displayedTrades.length === 0" class="empty-state">
+          <p>{{ selectedDate ? t.noTradesDay : t.noTrades }}</p>
+        </div>
+
+        <div v-else class="trades-list">
+          <div v-for="trade in displayedTrades" :key="trade.id" class="trade-card" :class="tradeClass(trade)">
+            <div class="trade-header">
+              <div class="trade-pair">
+                <strong>{{ trade.pair }}</strong>
+                <span class="trade-type" :class="trade.type">{{ trade.type.toUpperCase() }}</span>
+              </div>
+              <div class="trade-profit" :class="profitClass(trade.profitLoss)">
+                {{ formatProfit(trade.profitLoss) }}
+              </div>
+            </div>
+
+            <div class="trade-details">
+              <div class="detail-item">
+                <span class="label">{{ t.date }}:</span>
+                <span>{{ formatDate(trade.datetime) }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">{{ t.exchange }}:</span>
+                <span>{{ trade.exchange || 'N/A' }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">{{ t.entry }}:</span>
+                <span>${{ trade.entryPrice }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">{{ t.exit }}:</span>
+                <span>{{ trade.exitPrice ? '$' + trade.exitPrice : t.open }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">{{ t.amount }}:</span>
+                <span>{{ trade.amount }}</span>
+              </div>
+            </div>
+
+            <div class="trade-notes" v-if="trade.rationale">
+              <strong>{{ t.rationale }}:</strong>
+              <p>{{ trade.rationale }}</p>
+            </div>
+
+            <div class="trade-notes" v-if="trade.notes">
+              <strong>{{ t.notes }}:</strong>
+              <p>{{ trade.notes }}</p>
+            </div>
+
+            <div class="trade-actions">
+              <button class="btn-small btn-edit" @click="editTrade(trade)">{{ t.edit }}</button>
+              <button class="btn-small btn-delete" @click="deleteTrade(trade.id)">{{ t.delete }}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

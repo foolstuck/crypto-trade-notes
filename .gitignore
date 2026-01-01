@@ -1,0 +1,5 @@
+node_modules/
+server/trades.json
+server/users.json
+.DS_Store
+*.log
