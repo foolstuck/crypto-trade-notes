@@ -44,6 +44,21 @@ async function initDatabase() {
       CREATE INDEX IF NOT EXISTS idx_trades_datetime ON trades(datetime DESC)
     `);
 
+    // Create session table for express-session with connect-pg-simple
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS "session" (
+        "sid" varchar NOT NULL COLLATE "default",
+        "sess" json NOT NULL,
+        "expire" timestamp(6) NOT NULL,
+        CONSTRAINT "session_pkey" PRIMARY KEY ("sid")
+      )
+    `);
+
+    // Create index on session expire for cleanup
+    await pool.query(`
+      CREATE INDEX IF NOT EXISTS "IDX_session_expire" ON "session" ("expire")
+    `);
+
     console.log('Database tables initialized successfully');
   } catch (error) {
     console.error('Error initializing database:', error);
